@@ -24,17 +24,24 @@ template Mkt2VerifierLevel() {
 }
 
 template Mkt2Verifier(nLevels) {
+    // Private inputs
     signal input key;
-    signal input value;
-    signal input root;
+    signal input secret;
     signal input siblings[nLevels];
+
+    // Public inputs
+    signal input nullifier;
+    signal input root;
+
+    // TODO! Relayer public inputs
 
     component n2b = Num2Bits(nLevels);
     component levels[nLevels];
 
-    component hashV = Poseidon(1);
+    component hashV = Poseidon(2);
     
-    hashV.inputs[0] <== value;
+    hashV.inputs[0] <== secret;
+    hashV.inputs[1] <== nullifier;
 
     n2b.in <== key;
 
@@ -50,4 +57,6 @@ template Mkt2Verifier(nLevels) {
     }
 
     root === levels[0].root;
+
+    // TODO! Constraints for relayer public input
 }

@@ -1,4 +1,5 @@
 pragma circom 2.0.0;
-include "./merkle.circom";
+include "./protocol.circom";
 
-component main { public [root] } = Mkt2Verifier(3);
+// to add public inputs for a relayer
+component main { public [nullifier, root] } = Mkt2Verifier(3);
